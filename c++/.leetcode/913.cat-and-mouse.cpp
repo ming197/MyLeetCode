@@ -14,69 +14,60 @@ using namespace std;
 // @lc code=start
 class Solution {
 public:
-    unordered_map<string, int> status_table;
-    int WIN = 1, LOSE = 2, DRAW = 0;
+    vector<vector<vector<int>>> status;
+    int MOUSE = 1, CAT = 2, DRAW = 0;
+    int hole = 0;
     int catMouseGame(vector<vector<int>>& graph) {
-        int mouse_pos = 1, cat_pos = 2, hole = 0, totalMoves = 0;
-        return playRecurse(graph, mouse_pos, cat_pos, hole, totalMoves);
+        int mouse_pos = 1, cat_pos = 2, k = 0;
+        int n = graph.size();
+        status = vector<vector<vector<int>>>(2*n + 2, vector<vector<int>>(n, vector<int>(n, -1)));
+        return dfs(graph, mouse_pos, cat_pos, k);
     }
 
-    int playRecurse(vector<vector<int>>& graph, int mouse_pos, int cat_pos, int hole, int totalMoves){
-        if(totalMoves > 2 * graph.size()){
-            // all nodes are visited, now if cat or mouse visit a node it would mean that they are repeating again and again to WIN.
+    int dfs(vector<vector<int>>& graph, int mouse_pos, int cat_pos, int k){
+        if(status[k][mouse_pos][cat_pos] != -1) return status[k][mouse_pos][cat_pos];
+        if(k > 2 * graph.size()) return DRAW;
+        if(mouse_pos == hole) return MOUSE;
+        if(mouse_pos == cat_pos) return CAT;
+        
+        if((k&1) == 0){ // mouse's turn
+            // to check if mouse can draw the game, better than a lose
+            bool canDraw = false;
+            for(int adj : graph[mouse_pos]){
+                int stat = dfs(graph, adj, cat_pos, k + 1);
+                if(stat == MOUSE){
+                    status[k][mouse_pos][cat_pos] = MOUSE;
+                    return MOUSE;
+                }
+                if(stat == DRAW) canDraw = true;
+            }
+            if(canDraw){
+                status[k][mouse_pos][cat_pos] = DRAW;
+                return DRAW;
+            }
+            status[k][mouse_pos][cat_pos] = CAT;
+            return CAT;
+        }
+
+        // cat's turn
+        bool canDraw = false;
+        // to check if cat can draw the game
+        for(int adj : graph[cat_pos]){
+            if(adj == hole) continue;
+            int stat = dfs(graph, mouse_pos, adj, k + 1);
+            if(stat == CAT){
+                status[k][mouse_pos][cat_pos] = CAT;
+                return CAT;
+            }
+            if(stat == DRAW) canDraw = true;
+        }
+        if(canDraw){
+            status[k][mouse_pos][cat_pos] = DRAW;
             return DRAW;
         }
-        if(mouse_pos == cat_pos) return LOSE;
-        if(mouse_pos == hole) return WIN;
-        
-        string status = to_string(mouse_pos) + " " + to_string(cat_pos) + " " + to_string(totalMoves);
-
-        if(status_table.find(status) != status_table.end()) return status_table[status];
-
-        if(totalMoves % 2 == 0){ // mouse's turn
-            // to check if we can draw the game, better than a lose
-			bool canDraw = false;
-
-            for(int adj_node : graph[mouse_pos]){
-                int playResult = playRecurse(graph, adj_node, cat_pos, hole, totalMoves + 1);
-                if(playResult == WIN){
-                    status_table[status] = WIN;
-                    return WIN;
-                }
-                if(playResult == DRAW) canDraw = true;
-            }
-
-            if(canDraw){
-                status_table[status] = DRAW;
-                return DRAW;
-            }
-
-            status_table[status] = LOSE;
-            return LOSE;
-        }else { // cat's turn
-            bool canDraw = false;
-
-            for(int adj_node : graph[cat_pos]){
-                if (adj_node == hole) {
-                    continue; // cat cannot travel to the Hole
-                }
-                int playResult = playRecurse(graph, mouse_pos, adj_node, hole, totalMoves + 1);
-                if(playResult == LOSE){
-                    status_table[status] = LOSE;
-                    return LOSE;
-                }
-                if(playResult == DRAW) canDraw = true;
-            }
-
-            if(canDraw){
-                status_table[status] = DRAW;
-                return DRAW;
-            }
-
-            status_table[status] = WIN;
-            return WIN;
-        }
-    }
+        status[k][mouse_pos][cat_pos] = MOUSE;
+        return MOUSE;
+    } 
 };
 // @lc code=end
 
