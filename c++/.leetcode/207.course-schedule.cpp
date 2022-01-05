@@ -43,11 +43,11 @@ public:
     }
 };
 
-// int main(){
-//     vector<vector<int>> matrix = {{0, 1}};
-//     Solution solution;
-//     solution.canFinish(2, matrix);
-//     return 0;
-// }
+int main(){
+    vector<vector<int>> matrix = {{0, 1}};
+    Solution* solution = new Solution();
+    solution->canFinish(2, matrix);
+    return 0;
+}
 // @lc code=end
 
