@@ -5,6 +5,8 @@
         "vector": "cpp",
         "bitset": "cpp",
         "string_view": "cpp",
-        "deque": "cpp"
+        "deque": "cpp",
+        "*.tcc": "cpp",
+        "list": "cpp"
     }
 }
