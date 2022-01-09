@@ -9,6 +9,9 @@
         "*.tcc": "cpp",
         "list": "cpp",
         "sstream": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "string": "cpp",
+        "random": "cpp",
+        "ratio": "cpp"
     }
 }
