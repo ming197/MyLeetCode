@@ -2,6 +2,7 @@
  * @lc app=leetcode id=306 lang=cpp
  *
  * [306] Additive Number
+ * // ref : https://leetcode-cn.com/problems/additive-number/solution/lei-jia-shu-by-leetcode-solution-cadc/
  */
 
 // @lc code=start
