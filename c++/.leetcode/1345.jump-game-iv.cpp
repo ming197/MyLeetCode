@@ -1,8 +1,8 @@
-/*
- * @lc app=leetcode id=1345 lang=cpp
- *
- * [1345] Jump Game IV
- */
+// /*
+//  * @lc app=leetcode id=1345 lang=cpp
+//  *
+//  * [1345] Jump Game IV
+//  */
 
 // @lc code=start
 #include <bits/stdc++.h>
