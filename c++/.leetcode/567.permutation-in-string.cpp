@@ -40,10 +40,3 @@ public:
 };
 // @lc code=end
 
-int main(){
-    string s1 = "ab";
-    string s2 = "eidboaoo";
-    Solution solution;
-    cout << solution.checkInclusion(s1, s2);
-}
-
