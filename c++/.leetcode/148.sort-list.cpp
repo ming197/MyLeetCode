@@ -65,18 +65,5 @@ public:
         return dummyHead->next;
     }
 };
-
-int main(){
-    int a[] = {4, 2, 1, 3};
-    ListNode* dummy = new ListNode();
-    ListNode* p = dummy;
-    for(int& x : a){
-        p->next = new ListNode(x);
-        p = p->next;
-    }
-    Solution solution;
-    solution.sortList(dummy->next);
-    return 0;
-}
 // @lc code=end
 
