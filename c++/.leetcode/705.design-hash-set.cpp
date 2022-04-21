@@ -6,7 +6,8 @@
 
 // @lc code=start
 
-
+#include <bits/stdc++.h>
+using namespace std;
 class MyHashSet {
 private:
     vector<list<int>> data;
