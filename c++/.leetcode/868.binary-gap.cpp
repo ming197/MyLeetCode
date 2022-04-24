@@ -13,8 +13,7 @@ public:
         int l = -1, r = -1;
         int i = 0;
         int res = 0;
-        while (n)
-        {
+        while (n){
             /* code */
             int bit = n&1;
             n >>= 1;
