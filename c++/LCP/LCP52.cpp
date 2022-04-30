@@ -29,6 +29,7 @@ public:
                 if (ops[i][0]) ans++;
             }
         }
+        
         return ans;
     }
 };
