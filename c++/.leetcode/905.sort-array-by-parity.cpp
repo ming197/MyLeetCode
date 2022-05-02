@@ -10,10 +10,6 @@ using namespace std;
 class Solution {
 public:
     vector<int> sortArrayByParity(vector<int>& nums) {
-        // int j = 0;
-        // for(int& x : nums){
-        //     if((x&1) == 1) j++;
-        // }
         int i = 0;
         for(int k = 0; k < nums.size(); k++){
             if((nums[k] & 1) == 0){
