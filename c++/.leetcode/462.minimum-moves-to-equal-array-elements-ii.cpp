@@ -2,6 +2,7 @@
  * @lc app=leetcode id=462 lang=cpp
  *
  * [462] Minimum Moves to Equal Array Elements II
+ * https://leetcode.cn/problems/minimum-moves-to-equal-array-elements-ii/solution/by-fuxuemingzhu-13z3/
  */
 
 // @lc code=start
