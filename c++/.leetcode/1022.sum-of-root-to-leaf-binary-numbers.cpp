@@ -21,7 +21,7 @@ public:
     vector<int> num; 
     int res = 0;
     int sumRootToLeaf(TreeNode* root) {
-        if(root == nullptr) return 0;
+            
         dfs(root);
         return res;
     }
