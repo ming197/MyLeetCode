@@ -34,3 +34,9 @@ public:
         }
     }
 };
+
+int main(){
+    Solution sol;
+    vector<int> arr = {1, 0, 2, 0, 0, 0, 0, 0};
+    sol.duplicateZeros(arr);
+}
