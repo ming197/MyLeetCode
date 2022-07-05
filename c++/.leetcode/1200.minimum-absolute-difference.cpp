@@ -20,6 +20,7 @@ public:
                 delta = arr[i] - arr[i - 1];
             }
             res.push_back({arr[i-1], arr[i]});
+            // res.emplace_back({arr[i-1], arr[i]});
         }
         return res;
     }
