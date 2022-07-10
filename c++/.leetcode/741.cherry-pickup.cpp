@@ -5,39 +5,44 @@
  */
 
 // @lc code=start
+#include <bits/stdc++.h>
+using namespace std;
 class Solution {
 public:
-    int cherryPickup(vector<vector<int>>& grid) {
-        int m = grid.size(), n = grid[0].size();
-        int f[m][n];
-        for(int i = 0; i < m; i++){
-            for(int j = 0; j < n; j++){
-                f[i][j] = -1;
+    int cherryPickup(vector<vector<int>> &grid) {
+        int n = grid.size();
+        vector<vector<vector<int>>> f(n * 2 - 1, vector<vector<int>>(n, vector<int>(n, INT_MIN)));
+        f[0][0][0] = grid[0][0];
+        for (int k = 1; k < n * 2 - 1; ++k) {
+            for (int x1 = max(k - n + 1, 0); x1 <= min(k, n - 1); ++x1) {
+                int y1 = k - x1;
+                if (grid[x1][y1] == -1) {
+                    continue;
+                }
+                for (int x2 = x1; x2 <= min(k, n - 1); ++x2) {
+                    int y2 = k - x2;
+                    if (grid[x2][y2] == -1) {
+                        continue;
+                    }
+                    int res = f[k - 1][x1][x2]; // 都往右
+                    if (x1) {
+                        res = max(res, f[k - 1][x1 - 1][x2]); // 往下，往右
+                    }
+                    if (x2) {
+                        res = max(res, f[k - 1][x1][x2 - 1]); // 往右，往下
+                    }
+                    if (x1 && x2) {
+                        res = max(res, f[k - 1][x1 - 1][x2 - 1]); // 都往下
+                    }
+                    res += grid[x1][y1];
+                    if (x2 != x1) { // 避免重复摘同一个樱桃
+                        res += grid[x2][y2];
+                    }
+                    f[k][x1][x2] = res;
+                }
             }
         }
-        f[0][0] = grid[0][0];
-        for(int j = 1; j < n; j++){
-            if(grid[0][j] == -1) break;
-            f[0][j] = f[0][j-1] + grid[0][j];
-        }
-        for(int i = 1; i < m; i++){
-            if(grid[i][0] == -1) break;
-            f[i][0] = f[i-1][0] + grid[i][0];
-        }
-        f[0][0] = grid[0][0];
-        for(int i = 1; i < m; i++){
-            for(int j = 1; j < n; j++){
-                // left
-                f[i][j] = (grid[i][j-1] == -1 ? -1 : f[i][j-1] + grid[i][j-1]);
-                // up
-                f[i][j] = max(f[i][j], grid[i-1][j] == -1 ? -1 : f[i-1][j] + grid[i-1][j]);
-            }
-        }
-    }
-
-    bool inGrid(int x, int y, int& m, int& n){
-        if(x < 0 || x >= m || y < 0 || y >= n) return false;
-        return true;
+        return max(f.back().back().back(), 0);
     }
 };
 // @lc code=end
